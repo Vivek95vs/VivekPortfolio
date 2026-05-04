@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Arun Kumar TN – Senior Software Engineer Portfolio">
+  <title>Arun Kumar TN | Portfolio</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700;1,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:#06080f; --bg2:#090c16; --surface:#0f1320; --surface2:#141828;
+      --border:rgba(255,255,255,.06); --border2:rgba(255,255,255,.11);
+      --white:#eef2ff; --muted:rgba(238,242,255,.52); --muted2:rgba(238,242,255,.28);
+      --accent:#22d3a0; --accent2:#6366f1; --accent3:#f59e0b;
+      --grad:linear-gradient(135deg,#22d3a0,#6366f1);
+      --fh:'Playfair Display',serif; --fb:'Outfit',sans-serif; --fm:'JetBrains Mono',monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--fb);background:var(--bg);color:var(--white);overflow-x:hidden;}
+
+    /* noise */
+    body::before{content:'';position:fixed;inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events:none;z-index:0;opacity:.5;}
+
+    /* orbs */
+    .orb{position:fixed;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0;}
+    .orb-1{width:600px;height:600px;background:rgba(99,102,241,.10);top:-180px;right:-160px;}
+    .orb-2{width:450px;height:450px;background:rgba(34,211,160,.07);bottom:0;left:-120px;}
+    .orb-3{width:300px;height:300px;background:rgba(245,158,11,.05);top:55%;left:45%;}
+
+    /* ── NAVBAR ── */
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:200;padding:1.1rem 0;
+      background:rgba(6,8,15,.55);backdrop-filter:blur(24px);
+      border-bottom:1px solid var(--border);transition:padding .3s,background .3s;}
+    .navbar.scrolled{padding:.72rem 0;background:rgba(6,8,15,.9);}
+    .navbar-brand{font-family:var(--fb);font-weight:800;font-size:1.35rem;
+      letter-spacing:-.5px;color:var(--white)!important;text-decoration:none;}
+    .brand-dot{color:var(--accent);}
+    .nav-link{font-size:.76rem;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;
+      color:var(--muted)!important;padding:.5rem 1rem!important;position:relative;transition:color .25s;}
+    .nav-link::after{content:'';position:absolute;bottom:0;left:1rem;right:1rem;
+      height:1.5px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .25s;}
+    .nav-link:hover,.nav-link.active{color:var(--white)!important;}
+    .nav-link:hover::after,.nav-link.active::after{transform:scaleX(1);}
+    .nav-hire{display:inline-flex;align-items:center;gap:.45rem;padding:.46rem 1.2rem;
+      background:var(--grad);color:#fff!important;font-size:.72rem;font-weight:700;
+      letter-spacing:1.5px;text-transform:uppercase;border-radius:100px;
+      text-decoration:none;margin-left:.5rem;transition:opacity .25s,transform .25s;white-space:nowrap;}
+    .nav-hire:hover{opacity:.85;transform:translateY(-1px);}
+    .navbar-toggler{border:1px solid var(--border2);padding:.38rem .65rem;}
+    .navbar-toggler-icon{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(238,242,255,.8)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");}
+
+    /* pages */
+    .page{display:none;min-height:100vh;position:relative;z-index:1;}
+    .page.active{display:block;}
+
+    /* ── HOME ── */
+    .hero{min-height:100vh;display:flex;align-items:center;padding:130px 0 90px;position:relative;overflow:hidden;}
+    .hero-ghost{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      font-family:var(--fh);font-size:clamp(5rem,17vw,20rem);font-weight:800;font-style:italic;
+      color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.025);
+      white-space:nowrap;pointer-events:none;user-select:none;}
+
+    .badge-open{display:inline-flex;align-items:center;gap:.55rem;padding:.38rem 1rem;
+      background:rgba(34,211,160,.08);border:1px solid rgba(34,211,160,.22);
+      border-radius:100px;font-size:.7rem;font-weight:700;letter-spacing:1.8px;
+      text-transform:uppercase;color:var(--accent);margin-bottom:1.8rem;}
+    .badge-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;}
+    @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(34,211,160,.45);}50%{box-shadow:0 0 0 7px rgba(34,211,160,0);}}
+
+    .hero-name{font-family:var(--fh);font-weight:800;font-size:clamp(3rem,7vw,6.5rem);
+      line-height:.92;letter-spacing:-.03em;margin-bottom:.6rem;}
+    .hero-name .grad-line{font-style:italic;background:var(--grad);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+    .role-bar{display:flex;align-items:center;gap:.9rem;margin:1.4rem 0;}
+    .role-ln{width:36px;height:2px;background:var(--accent);flex-shrink:0;}
+    .role-tx{font-family:var(--fm);font-size:.76rem;color:var(--accent);letter-spacing:.5px;}
+
+    .hero-desc{font-size:.95rem;line-height:1.76;color:var(--muted);max-width:460px;margin-bottom:2rem;}
+
+    .chips{display:flex;flex-wrap:wrap;gap:.42rem;margin-bottom:2.2rem;}
+    .chip{padding:.27rem .82rem;border:1px solid var(--border2);border-radius:100px;
+      font-size:.68rem;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;
+      color:var(--muted);transition:all .2s;}
+    .chip.lit{border-color:rgba(34,211,160,.35);color:var(--accent);background:rgba(34,211,160,.06);}
+    .chip:hover{border-color:var(--accent);color:var(--accent);}
+
+    .cta-row{display:flex;gap:.9rem;flex-wrap:wrap;margin-bottom:2.8rem;}
+    .btn-main{display:inline-flex;align-items:center;gap:.5rem;padding:.82rem 1.85rem;
+      background:var(--grad);color:#fff;font-family:var(--fb);font-size:.76rem;font-weight:700;
+      letter-spacing:1.5px;text-transform:uppercase;border:none;border-radius:6px;
+      text-decoration:none;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;}
+    .btn-main::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.12);opacity:0;transition:opacity .2s;}
+    .btn-main:hover::after{opacity:1;}
+    .btn-main:hover{transform:translateY(-2px);color:#fff;}
+    .btn-out{display:inline-flex;align-items:center;gap:.5rem;padding:.82rem 1.85rem;
+      background:transparent;color:var(--white);font-family:var(--fb);font-size:.76rem;font-weight:700;
+      letter-spacing:1.5px;text-transform:uppercase;border:1px solid var(--border2);
+      border-radius:6px;text-decoration:none;cursor:pointer;transition:all .3s;}
+    .btn-out:hover{border-color:var(--accent);color:var(--accent);}
+
+    .stats-row{display:flex;gap:2.5rem;flex-wrap:wrap;}
+    .st-num{font-family:var(--fh);font-size:2.8rem;font-weight:800;line-height:1;color:var(--white);}
+    .st-num em{color:var(--accent);font-style:normal;}
+    .st-lbl{font-size:.66rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);margin-top:.15rem;}
+    .st-div{width:1px;background:var(--border2);align-self:stretch;}
+
+    /* terminal */
+    .term-wrap{position:relative;}
+    .term-wrap::before{content:'';position:absolute;inset:-1px;background:var(--grad);border-radius:12px;opacity:.2;z-index:-1;}
+    .terminal{background:var(--surface);border:1px solid var(--border2);border-radius:10px;
+      overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.55);animation:float 7s ease-in-out infinite;}
+    @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+    .term-bar{display:flex;align-items:center;gap:.45rem;padding:.75rem 1.1rem;
+      background:rgba(255,255,255,.025);border-bottom:1px solid var(--border);}
+    .td{width:10px;height:10px;border-radius:50%;}
+    .td.r{background:#ff5f57;}.td.y{background:#febc2e;}.td.g{background:#28c840;}
+    .term-ttl{font-family:var(--fm);font-size:.7rem;color:var(--muted2);margin-left:auto;}
+    .term-body{padding:1.4rem 1.5rem;font-family:var(--fm);font-size:.74rem;line-height:1.85;}
+    .tc{color:#4d5e8a;}.tk{color:#c792ea;}.tt{color:#82aaff;}.ts{color:#c3e88d;}
+    .tn{color:#f78c6c;}.tf{color:#82aaff;}.tv{color:var(--accent);}.to{color:var(--muted2);}
+    .tcur{display:inline-block;width:7px;height:13px;background:var(--accent);
+      vertical-align:middle;animation:blink 1s infinite;}
+    @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+    /* marquee */
+    .marquee-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+      padding:.75rem 0;background:var(--surface);position:relative;z-index:1;}
+    .marquee-track{display:flex;gap:2.5rem;animation:mqrun 24s linear infinite;white-space:nowrap;}
+    .mqi{display:flex;align-items:center;gap:.75rem;font-family:var(--fb);font-size:.7rem;
+      font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);}
+    .mqi i{color:var(--accent);font-size:.5rem;}
+    @keyframes mqrun{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+    /* ── SECTION HEADERS ── */
+    .sec-lbl{font-family:var(--fm);font-size:.66rem;letter-spacing:3px;
+      text-transform:uppercase;color:var(--accent);margin-bottom:.4rem;}
+    .sec-lbl::before{content:'// ';}
+    .sec-ttl{font-family:var(--fh);font-weight:800;font-size:clamp(2.1rem,4.5vw,3.5rem);
+      line-height:1.05;color:var(--white);margin-bottom:.65rem;}
+    .sec-sub{font-size:.88rem;color:var(--muted);line-height:1.72;max-width:500px;}
+    .sec-line{display:flex;align-items:center;gap:.7rem;margin-top:1.1rem;}
+    .sec-line span{flex:0 0 50px;height:2px;background:var(--grad);border-radius:2px;}
+    .sec-line em{flex:0 0 8px;height:8px;background:var(--accent);border-radius:50%;}
+
+    /* ── ABOUT ── */
+    .about-wrap{padding:120px 0 80px;}
+    .profile-card{background:var(--surface);border:1px solid var(--border2);border-radius:10px;overflow:hidden;position:sticky;top:88px;}
+    .profile-top{height:100px;background:var(--grad);position:relative;}
+    .profile-top::after{content:'';position:absolute;inset:0;
+      background:repeating-linear-gradient(-45deg,rgba(255,255,255,.06) 0,rgba(255,255,255,.06) 1px,transparent 1px,transparent 18px);}
+    .p-avatar{position:absolute;bottom:-36px;left:1.4rem;width:72px;height:72px;border-radius:8px;
+      border:3px solid var(--surface);background:var(--grad);display:flex;align-items:center;
+      justify-content:center;font-family:var(--fh);font-size:1.5rem;font-weight:800;color:#fff;z-index:1;}
+    .p-body{padding:3rem 1.4rem 1.4rem;}
+    .p-name{font-family:var(--fh);font-size:1.3rem;font-weight:800;color:var(--white);margin-bottom:.2rem;}
+    .p-tag{display:inline-block;padding:.18rem .75rem;background:rgba(34,211,160,.1);
+      border:1px solid rgba(34,211,160,.25);border-radius:100px;font-size:.62rem;font-weight:700;
+      letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem;}
+    .i-row{display:flex;justify-content:space-between;align-items:center;padding:.52rem 0;
+      border-bottom:1px solid var(--border);font-size:.78rem;}
+    .i-row:last-child{border-bottom:none;}
+    .i-k{color:var(--muted2);font-weight:500;}.i-v{color:var(--white);font-weight:600;text-align:right;}
+    .i-v a{color:var(--accent);text-decoration:none;}
+    .about-txt{font-size:.9rem;line-height:1.8;color:var(--muted);margin-bottom:1.1rem;}
+
+    .sg{display:grid;grid-template-columns:repeat(4,1fr);gap:.85rem;margin:1.9rem 0;}
+    .sc{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+      padding:1.1rem .65rem;text-align:center;transition:all .3s;position:relative;overflow:hidden;}
+    .sc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+      background:var(--grad);transform:scaleX(0);transition:transform .3s;}
+    .sc:hover::after{transform:scaleX(1);}
+    .sc:hover{transform:translateY(-4px);border-color:var(--border2);}
+    .sc-n{font-family:var(--fh);font-size:1.85rem;font-weight:800;color:var(--accent);line-height:1;}
+    .sc-l{font-size:.6rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);margin-top:.2rem;}
+
+    .skill-r{margin-bottom:1.1rem;}
+    .skill-h{display:flex;justify-content:space-between;margin-bottom:.35rem;}
+    .skill-n{font-size:.78rem;font-weight:600;color:var(--white);}
+    .skill-p{font-family:var(--fm);font-size:.68rem;color:var(--accent);}
+    .skill-tr{height:3px;background:var(--surface2);border-radius:100px;overflow:hidden;}
+    .skill-f{height:100%;background:var(--grad);border-radius:100px;transform-origin:left;
+      transform:scaleX(0);transition:transform 1.1s cubic-bezier(.4,0,.2,1);}
+
+    /* ── RESUME ── */
+    .resume-wrap{padding:120px 0 80px;}
+    .sum-card{background:var(--surface);border:1px solid var(--border2);border-radius:10px;
+      padding:1.8rem;margin-bottom:2.2rem;position:relative;overflow:hidden;}
+    .sum-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad);}
+    .sum-name{font-family:var(--fh);font-size:1.4rem;font-weight:800;color:var(--white);margin-bottom:.6rem;}
+    .sum-txt{font-size:.86rem;line-height:1.72;color:var(--muted);margin-bottom:.9rem;}
+    .sum-con{display:flex;flex-direction:column;gap:.35rem;}
+    .sum-con span{font-size:.76rem;color:var(--muted2);}
+    .sum-con i{color:var(--accent);margin-right:.4rem;}
+
+    .col-h{display:flex;align-items:center;gap:.55rem;font-family:var(--fh);font-size:1.15rem;
+      font-weight:800;color:var(--white);margin-bottom:1.4rem;padding-bottom:.65rem;border-bottom:1px solid var(--border2);}
+    .col-h i{color:var(--accent);}
+
+    .tl{position:relative;padding-left:1.4rem;padding-bottom:1.75rem;border-left:1px solid var(--border2);}
+    .tl::before{content:'';position:absolute;left:-5px;top:5px;width:9px;height:9px;border-radius:50%;
+      background:var(--accent);box-shadow:0 0 0 3px rgba(34,211,160,.18);}
+    .tl-yr{display:inline-block;font-family:var(--fm);font-size:.62rem;letter-spacing:1px;color:var(--accent);
+      background:rgba(34,211,160,.08);border:1px solid rgba(34,211,160,.2);padding:.13rem .6rem;
+      border-radius:100px;margin-bottom:.4rem;}
+    .tl-t{font-size:.9rem;font-weight:700;color:var(--white);margin-bottom:.12rem;}
+    .tl-p{font-size:.76rem;color:var(--muted2);margin-bottom:.35rem;}
+    .tl-d{font-size:.78rem;color:var(--muted);line-height:1.65;}
+    .tl-ul{padding-left:1rem;margin:0;}
+    .tl-ul li{font-size:.78rem;color:var(--muted);line-height:1.72;}
+    .tl-ul li::marker{color:var(--accent);}
+
+    .cert{display:flex;align-items:center;gap:.9rem;padding:.82rem;background:var(--surface);
+      border:1px solid var(--border);border-radius:8px;margin-bottom:.62rem;transition:all .2s;}
+    .cert:hover{border-color:var(--border2);transform:translateX(5px);}
+    .cert-ico{flex:0 0 34px;height:34px;background:rgba(34,211,160,.08);border:1px solid rgba(34,211,160,.15);
+      border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:.85rem;}
+    .cert-t{font-size:.78rem;font-weight:700;color:var(--white);}
+    .cert-b{font-size:.68rem;color:var(--muted2);}
+
+    /* ── PROJECTS ── */
+    .portfolio-wrap{padding:120px 0 80px;}
+    .filter-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2.2rem;}
+    .fb{padding:.4rem 1.1rem;background:transparent;border:1px solid var(--border2);border-radius:100px;
+      font-size:.65rem;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted);
+      cursor:pointer;transition:all .2s;}
+    .fb:hover,.fb.active{background:var(--accent);border-color:var(--accent);color:var(--bg);}
+
+    .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;}
+    .proj-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+      overflow:hidden;cursor:pointer;transition:all .3s;position:relative;}
+    .proj-card:hover{transform:translateY(-6px);border-color:rgba(34,211,160,.25);}
+    .proj-card.hidden{display:none;}
+    .proj-banner{height:175px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+    .pb1{background:linear-gradient(135deg,#0c1428,#1a1030);}
+    .pb2{background:linear-gradient(135deg,#091520,#0c2018);}
+    .pb3{background:linear-gradient(135deg,#1a1008,#0c1020);}
+    .pb4{background:linear-gradient(135deg,#160c1a,#0a1020);}
+    .proj-grid-bg{position:absolute;inset:0;
+      background-image:linear-gradient(rgba(34,211,160,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(34,211,160,.04) 1px,transparent 1px);
+      background-size:28px 28px;}
+    .proj-ico{font-size:2.8rem;position:relative;}
+    .proj-tag-badge{position:absolute;top:.85rem;right:.85rem;padding:.16rem .6rem;
+      background:rgba(34,211,160,.12);border:1px solid rgba(34,211,160,.25);border-radius:100px;
+      font-size:.6rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);}
+    .proj-hover{position:absolute;inset:0;background:rgba(6,8,15,.88);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:.6rem;opacity:0;transition:opacity .28s;}
+    .proj-card:hover .proj-hover{opacity:1;}
+    .ph-cat{font-family:var(--fm);font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);}
+    .ph-ttl{font-family:var(--fh);font-size:1.25rem;font-weight:800;color:var(--white);}
+    .ph-btn{padding:.42rem 1.25rem;background:var(--accent);color:var(--bg);border:none;border-radius:4px;
+      font-size:.66rem;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;cursor:pointer;transition:background .2s;}
+    .ph-btn:hover{background:var(--white);}
+    .proj-body{padding:1.1rem 1.2rem;}
+    .proj-ttl{font-size:.88rem;font-weight:700;color:var(--white);margin-bottom:.15rem;}
+    .proj-st{font-size:.7rem;color:var(--muted2);}
+    .proj-techs{display:flex;flex-wrap:wrap;gap:.38rem;margin-top:.65rem;}
+    .pt{padding:.14rem .52rem;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2);
+      border-radius:4px;font-size:.58rem;font-weight:600;letter-spacing:.8px;color:rgba(165,180,252,.8);}
+
+    /* modal */
+    .modal-bg{position:fixed;inset:0;background:rgba(6,8,15,.88);backdrop-filter:blur(12px);
+      z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem;
+      opacity:0;pointer-events:none;transition:opacity .3s;}
+    .modal-bg.open{opacity:1;pointer-events:all;}
+    .modal-box{background:var(--surface);border:1px solid var(--border2);border-radius:12px;
+      max-width:580px;width:100%;overflow:hidden;position:relative;
+      transform:translateY(24px);transition:transform .3s;}
+    .modal-bg.open .modal-box{transform:translateY(0);}
+    .modal-close{position:absolute;top:.9rem;right:.9rem;background:rgba(255,255,255,.05);
+      border:1px solid var(--border2);color:var(--white);width:30px;height:30px;border-radius:6px;
+      font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+    .modal-close:hover{background:rgba(255,255,255,.1);}
+    .modal-top{text-align:center;padding:1.8rem;border-bottom:1px solid var(--border);
+      font-size:3.5rem;background:linear-gradient(135deg,var(--surface),var(--bg2));}
+    .modal-body-inner{padding:1.8rem;}
+    .m-cat{font-family:var(--fm);font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);}
+    .m-ttl{font-family:var(--fh);font-size:1.7rem;font-weight:800;color:var(--white);margin:.4rem 0;}
+    .m-desc{font-size:.84rem;color:var(--muted);line-height:1.7;margin-bottom:1.2rem;}
+    .m-meta{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:1rem;}
+    .m-mi strong{display:block;font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);margin-bottom:.18rem;}
+    .m-mi span{font-size:.82rem;color:var(--white);font-weight:600;}
+    .m-techs-lbl{font-size:.6rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);margin-bottom:.45rem;}
+    .m-techs{display:flex;flex-wrap:wrap;gap:.38rem;}
+
+    /* ── CONTACT ── */
+    .contact-wrap{padding:120px 0 80px;}
+    .info-pnl{background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:1.8rem;height:100%;}
+    .ip-ttl{font-family:var(--fh);font-size:1.25rem;font-weight:800;color:var(--white);margin-bottom:.4rem;}
+    .ip-sub{font-size:.82rem;color:var(--muted);line-height:1.7;margin-bottom:1.4rem;}
+    .cd{display:flex;gap:.9rem;margin-bottom:1.1rem;align-items:flex-start;}
+    .cd-ico{flex:0 0 38px;height:38px;background:rgba(34,211,160,.08);border:1px solid rgba(34,211,160,.15);
+      border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--accent);}
+    .cd-lbl{font-size:.62rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);}
+    .cd-val{font-size:.82rem;color:var(--white);font-weight:500;}
+    .cd-val a{color:var(--accent);text-decoration:none;}
+    .soc-r{display:flex;gap:.65rem;margin-top:1.3rem;}
+    .soc-b{width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+      background:rgba(255,255,255,.03);border:1px solid var(--border2);border-radius:6px;
+      color:var(--muted);text-decoration:none;font-size:.92rem;transition:all .2s;}
+    .soc-b:hover{border-color:var(--accent);color:var(--accent);background:rgba(34,211,160,.05);}
+    .form-pnl{background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:1.8rem;}
+    .fl{display:block;font-size:.64rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+      color:var(--muted2);margin-bottom:.38rem;}
+    .fc{width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:6px;
+      padding:.7rem 1rem;color:var(--white);font-family:var(--fb);font-size:.84rem;
+      margin-bottom:.9rem;outline:none;transition:border-color .2s;}
+    .fc:focus{border-color:var(--accent);}
+    .fc::placeholder{color:var(--muted2);}
+    textarea.fc{height:130px;resize:none;}
+    .btn-snd{width:100%;padding:.82rem;background:var(--grad);color:#fff;border:none;
+      border-radius:6px;font-family:var(--fb);font-size:.76rem;font-weight:700;
+      letter-spacing:2px;text-transform:uppercase;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;gap:.5rem;transition:opacity .25s;}
+    .btn-snd:hover{opacity:.88;}
+    .form-ok{display:none;text-align:center;padding:2.5rem 1rem;}
+    .form-ok i{font-size:2.8rem;color:var(--accent);display:block;margin-bottom:.9rem;}
+    .form-ok h5{font-family:var(--fh);font-size:1.4rem;font-weight:800;color:var(--white);margin-bottom:.4rem;}
+    .form-ok p{font-size:.84rem;color:var(--muted);}
+
+    /* footer */
+    footer{background:var(--surface);border-top:1px solid var(--border);padding:1.8rem 0;text-align:center;}
+    .foot-n{font-family:var(--fh);font-size:1.25rem;font-weight:800;color:var(--white);margin-bottom:.9rem;}
+    .foot-soc{display:flex;justify-content:center;gap:.6rem;margin-bottom:.9rem;}
+    .foot-copy{font-size:.7rem;color:var(--muted2);letter-spacing:1px;}
+
+    /* scroll top */
+    #scrollTop{position:fixed;bottom:1.8rem;right:1.8rem;width:42px;height:42px;
+      background:var(--grad);color:#fff;border:none;border-radius:8px;font-size:1rem;
+      cursor:pointer;display:none;align-items:center;justify-content:center;z-index:50;transition:opacity .2s;}
+    #scrollTop:hover{opacity:.85;}
+    #scrollTop.show{display:flex;}
+
+    @media(max-width:991px){.sg{grid-template-columns:repeat(2,1fr);}.profile-card{position:static;}}
+    @media(max-width:767px){.hero-name{font-size:clamp(2.6rem,10vw,4.2rem);}.stats-row{gap:1.5rem;}.sg{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:575px){.m-meta{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-xl" id="navbar">
+  <div class="container">
+    <a class="navbar-brand" href="#" onclick="return showPage('home',null)">Arun<span class="brand-dot">.</span>dev</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-xl-center">
+        <li class="nav-item"><a class="nav-link active" href="#" onclick="return showPage('home',this)">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="return showPage('about',this)">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="return showPage('resume',this)">Resume</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="return showPage('portfolio',this)">Projects</a></li>
+        <li class="nav-item"><a href="#" onclick="return showPage('contact',null)" class="nav-hire"><i class="bi bi-envelope-fill"></i> Hire Me</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════ HOME ═══════════════ -->
+<div id="home" class="page active">
+  <section class="hero">
+    <div class="hero-ghost">ARUN</div>
+    <div class="container">
+      <div class="row align-items-center gy-5">
+        <div class="col-lg-6">
+          <div class="badge-open"><span class="badge-dot"></span> Open to Opportunities</div>
+          <h1 class="hero-name">
+            Arun Kumar<br>
+            <span class="grad-line">TN</span>
+          </h1>
+          <div class="role-bar">
+            <div class="role-ln"></div>
+            <div class="role-tx">Senior Software Engineer @ Panacea Medical Technologies</div>
+          </div>
+          <p class="hero-desc">
+            4+ years crafting mission-critical medical desktop applications. Expert in C#, WPF, MVVM, and enterprise-grade software architecture for life-saving healthcare systems.
+          </p>
+          <div class="chips">
+            <span class="chip lit">C#</span>
+            <span class="chip lit">WPF / XAML</span>
+            <span class="chip lit">MVVM</span>
+            <span class="chip">Prism</span>
+            <span class="chip">WCF</span>
+            <span class="chip">MS SQL</span>
+            <span class="chip">LINQ</span>
+            <span class="chip">Entity Framework</span>
+          </div>
+          <div class="cta-row">
+            <a class="btn-main" href="#" onclick="return showPage('resume',null)"><i class="bi bi-file-earmark-person"></i> View Resume</a>
+            <a class="btn-out" href="#" onclick="return showPage('contact',null)"><i class="bi bi-envelope-open"></i> Contact Me</a>
+          </div>
+          <div class="stats-row">
+            <div class="st"><div class="st-num">4<em>+</em></div><div class="st-lbl">Years Exp.</div></div>
+            <div class="st-div"></div>
+            <div class="st"><div class="st-num">4</div><div class="st-lbl">Projects</div></div>
+            <div class="st-div"></div>
+            <div class="st"><div class="st-num">2</div><div class="st-lbl">Companies</div></div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="term-wrap">
+            <div class="terminal">
+              <div class="term-bar">
+                <span class="td r"></span><span class="td y"></span><span class="td g"></span>
+                <span class="term-ttl">arun_profile.cs</span>
+              </div>
+              <div class="term-body">
+                <div class="tc">// Senior Software Engineer — Medical Tech</div>
+                <div>&nbsp;</div>
+                <div><span class="tk">using</span> <span class="tt">System</span><span class="to">;</span></div>
+                <div><span class="tk">using</span> <span class="tt">WPF.MVVM.Prism</span><span class="to">;</span></div>
+                <div>&nbsp;</div>
+                <div><span class="tk">public class</span> <span class="tt">ArunKumarTN</span> <span class="to">:</span> <span class="tt">Engineer</span></div>
+                <div><span class="to">{</span></div>
+                <div>&nbsp;&nbsp;<span class="tk">public string</span> <span class="tv">Company</span>    <span class="to">=&gt;</span> <span class="ts">"Panacea Medical Tech"</span><span class="to">;</span></div>
+                <div>&nbsp;&nbsp;<span class="tk">public int</span>    <span class="tv">Experience</span> <span class="to">=&gt;</span> <span class="tn">4</span><span class="to">;</span></div>
+                <div>&nbsp;&nbsp;<span class="tk">public string[]</span> <span class="tv">Skills</span> <span class="to">=</span></div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="to">{</span> <span class="ts">"C#"</span><span class="to">,</span> <span class="ts">"WPF"</span><span class="to">,</span> <span class="ts">"MVVM"</span><span class="to">,</span> <span class="ts">"Prism"</span> <span class="to">};</span></div>
+                <div>&nbsp;&nbsp;<span class="tk">public bool</span> <span class="tf">IsHirable</span><span class="to">() =&gt;</span> <span class="tk">true</span><span class="to">;</span></div>
+                <div><span class="to">}</span></div>
+                <div>&nbsp;</div>
+                <div><span class="tc">// dotnet run → "Ready to build!" </span><span class="tcur"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="mqi"><i class="bi bi-circle-fill"></i>C#</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>WPF / XAML</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>MVVM</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>Prism</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>WCF</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>Entity Framework</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>MS SQL Server</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>LINQ / PLINQ</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>TCP/IP</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>Automapper</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>Medical Tech</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>C#</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>WPF / XAML</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>MVVM</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>Prism</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>WCF</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>Entity Framework</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>MS SQL Server</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>LINQ / PLINQ</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>TCP/IP</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>Automapper</span>
+      <span class="mqi"><i class="bi bi-circle-fill"></i>Medical Tech</span>
+    </div>
+  </div>
+
+  <footer><div class="container">
+    <div class="foot-n">Arun Kumar TN</div>
+    <div class="foot-soc">
+      <a href="mailto:arunn1919821@gmail.com" class="soc-b"><i class="bi bi-envelope-fill"></i></a>
+      <a href="#" class="soc-b"><i class="bi bi-github"></i></a>
+      <a href="#" class="soc-b"><i class="bi bi-linkedin"></i></a>
+    </div>
+    <div class="foot-copy">© 2025 Arun Kumar TN · All Rights Reserved</div>
+  </div></footer>
+</div>
+
+<!-- ═══════════════ ABOUT ═══════════════ -->
+<div id="about" class="page">
+  <div class="about-wrap">
+    <div class="container">
+      <div class="mb-5">
+        <div class="sec-lbl">Who I Am</div>
+        <h2 class="sec-ttl">About Me</h2>
+        <p class="sec-sub">Building life-critical medical software with precision, clean architecture, and a deep passion for performance.</p>
+        <div class="sec-line"><span></span><em></em></div>
+      </div>
+      <div class="row gy-4">
+        <div class="col-lg-4">
+          <div class="profile-card">
+            <div class="profile-top"><div class="p-avatar">AK</div></div>
+            <div class="p-body">
+              <div class="p-name">Arun Kumar TN</div>
+              <span class="p-tag">Senior Software Engineer</span>
+              <div class="i-row"><span class="i-k">Location</span><span class="i-v">Bangalore, Karnataka</span></div>
+              <div class="i-row"><span class="i-k">Company</span><span class="i-v">Panacea Medical Tech</span></div>
+              <div class="i-row"><span class="i-k">Degree</span><span class="i-v">MCA — CMRIT</span></div>
+              <div class="i-row"><span class="i-k">Experience</span><span class="i-v">4+ Years</span></div>
+              <div class="i-row"><span class="i-k">Phone</span><span class="i-v"><a href="tel:+917019719829">+91 7019719829</a></span></div>
+              <div class="i-row"><span class="i-k">Email</span><span class="i-v"><a href="mailto:arunn1919821@gmail.com">arunn1919821@gmail.com</a></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <h3 style="font-family:var(--fh);font-size:1.6rem;font-weight:800;color:var(--white);margin-bottom:1rem;">Senior Software Engineer & C# Specialist</h3>
+          <p class="about-txt">I'm Arun Kumar TN, a Senior Software Engineer at Panacea Medical Technologies Pvt. Ltd., where I've been building mission-critical healthcare software since November 2021. I specialize in C#, WPF desktop applications, MVVM architecture, and enterprise communication using WCF and TCP/IP protocols.</p>
+          <p class="about-txt">My work spans telecobalt treatment planning, patient simulation software, medical imaging applications, and brachytherapy control systems. I lead module-level development, mentor junior developers, and collaborate with hardware teams to ensure software reliability in life-critical environments.</p>
+          <div class="sg">
+            <div class="sc"><div class="sc-n">4+</div><div class="sc-l">Years Exp.</div></div>
+            <div class="sc"><div class="sc-n">4</div><div class="sc-l">Projects</div></div>
+            <div class="sc"><div class="sc-n">2</div><div class="sc-l">Companies</div></div>
+            <div class="sc"><div class="sc-n">10+</div><div class="sc-l">Modules Led</div></div>
+          </div>
+          <h4 style="font-size:.65rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);margin-bottom:1.1rem;">Technical Proficiency</h4>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="skill-r"><div class="skill-h"><span class="skill-n">C# / .NET</span><span class="skill-p">95%</span></div><div class="skill-tr"><div class="skill-f" data-s="0.95"></div></div></div>
+              <div class="skill-r"><div class="skill-h"><span class="skill-n">WPF / XAML / MVVM</span><span class="skill-p">95%</span></div><div class="skill-tr"><div class="skill-f" data-s="0.95"></div></div></div>
+              <div class="skill-r"><div class="skill-h"><span class="skill-n">Prism / MVC Architecture</span><span class="skill-p">88%</span></div><div class="skill-tr"><div class="skill-f" data-s="0.88"></div></div></div>
+            </div>
+            <div class="col-md-6">
+              <div class="skill-r"><div class="skill-h"><span class="skill-n">MS SQL / Entity Framework</span><span class="skill-p">85%</span></div><div class="skill-tr"><div class="skill-f" data-s="0.85"></div></div></div>
+              <div class="skill-r"><div class="skill-h"><span class="skill-n">WCF / TCP / Memory Map</span><span class="skill-p">82%</span></div><div class="skill-tr"><div class="skill-f" data-s="0.82"></div></div></div>
+              <div class="skill-r"><div class="skill-h"><span class="skill-n">LINQ / PLINQ</span><span class="skill-p">88%</span></div><div class="skill-tr"><div class="skill-f" data-s="0.88"></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer><div class="container">
+    <div class="foot-n">Arun Kumar TN</div>
+    <div class="foot-soc">
+      <a href="mailto:arunn1919821@gmail.com" class="soc-b"><i class="bi bi-envelope-fill"></i></a>
+      <a href="#" class="soc-b"><i class="bi bi-github"></i></a>
+      <a href="#" class="soc-b"><i class="bi bi-linkedin"></i></a>
+    </div>
+    <div class="foot-copy">© 2025 Arun Kumar TN · All Rights Reserved</div>
+  </div></footer>
+</div>
+
+<!-- ═══════════════ RESUME ═══════════════ -->
+<div id="resume" class="page">
+  <div class="resume-wrap">
+    <div class="container">
+      <div class="mb-5">
+        <div class="sec-lbl">My Journey</div>
+        <h2 class="sec-ttl">Resume</h2>
+        <p class="sec-sub">Education, experience, and key achievements shaping my professional path.</p>
+        <div class="sec-line"><span></span><em></em></div>
+      </div>
+      <div class="row gy-4">
+        <div class="col-lg-6">
+          <div class="sum-card">
+            <div class="sum-name">Arun Kumar TN</div>
+            <p class="sum-txt">Senior Software Engineer with 4+ years of experience building medical-grade desktop applications using C#, WPF, MVVM, and Prism. Passionate about clean architecture, scalable design, and life-critical software delivery.</p>
+            <div class="sum-con">
+              <span><i class="bi bi-geo-alt-fill"></i>Bangalore, Karnataka, India</span>
+              <span><i class="bi bi-telephone-fill"></i>+91 7019719829</span>
+              <span><i class="bi bi-envelope-fill"></i>arunn1919821@gmail.com</span>
+            </div>
+          </div>
+
+          <div class="col-h"><i class="bi bi-mortarboard-fill"></i> Education</div>
+          <div class="tl">
+            <span class="tl-yr">2018 – 2020</span>
+            <div class="tl-t">Master of Computer Applications</div>
+            <div class="tl-p">CMR Institute of Technology, Bangalore · CGPA: 7.7</div>
+          </div>
+          <div class="tl">
+            <span class="tl-yr">2014 – 2017</span>
+            <div class="tl-t">Bachelor of Computer Applications</div>
+            <div class="tl-p">New Baldwin Group of Institutions · 72.7%</div>
+          </div>
+
+          <div class="col-h mt-4"><i class="bi bi-tools"></i> Technical Stack</div>
+          <div style="padding-left:0;font-size:.8rem;line-height:2;color:var(--muted);">
+            <p><strong style="color:var(--white)">Language:</strong> C#</p>
+            <p><strong style="color:var(--white)">Frameworks:</strong> WPF, XAML, WCF, MVVM, MVC, Prism, Entity Framework, LINQ, PLINQ, Automapper</p>
+            <p><strong style="color:var(--white)">Dev Tool:</strong> Visual Studio 2017</p>
+            <p><strong style="color:var(--white)">Version Control:</strong> TFS 2017, Git</p>
+            <p><strong style="color:var(--white)">Database:</strong> MS SQL Server 2012 / 2014</p>
+            <p><strong style="color:var(--white)">IPC:</strong> TCP/IP, Memory Mapping</p>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="col-h"><i class="bi bi-briefcase-fill"></i> Experience</div>
+          <div class="tl">
+            <span class="tl-yr">Nov 2021 – Present</span>
+            <div class="tl-t">Senior Software Engineer</div>
+            <div class="tl-p">Panacea Medical Technologies Pvt. Ltd., Bangalore</div>
+            <ul class="tl-ul">
+              <li>Designed and implemented complex UI workflows using WPF, MVVM, and Prism frameworks.</li>
+              <li>Developed backend communication modules using WCF and TCP/IP protocols.</li>
+              <li>Led module-level development ensuring scalability and maintainability of codebase.</li>
+              <li>Mentored junior developers through code reviews, design discussions, and technical guidance.</li>
+              <li>Implemented database design, stored procedures, and performance improvements using MS SQL Server.</li>
+              <li>Collaborated with cross-functional teams to integrate hardware control with software applications.</li>
+              <li>Created setup projects and managed deployment builds.</li>
+              <li>Resolved customer issues and site-level bugs ensuring smooth application functionality.</li>
+            </ul>
+          </div>
+
+          <div class="col-h mt-4"><i class="bi bi-star-fill"></i> Key Projects</div>
+          <div class="cert">
+            <div class="cert-ico"><i class="bi bi-radioactive"></i></div>
+            <div><div class="cert-t">Bhabhatron-TAW & MLC</div><div class="cert-b">Telecobalt therapy treatment software</div></div>
+          </div>
+          <div class="cert">
+            <div class="cert-ico"><i class="bi bi-person-heart"></i></div>
+            <div><div class="cert-t">Imagin</div><div class="cert-b">Patient setup & simulation software</div></div>
+          </div>
+          <div class="cert">
+            <div class="cert-ico"><i class="bi bi-camera-fill"></i></div>
+            <div><div class="cert-t">Mammography v3</div><div class="cert-b">Breast screening imaging application</div></div>
+          </div>
+          <div class="cert">
+            <div class="cert-ico"><i class="bi bi-activity"></i></div>
+            <div><div class="cert-t">HDR – Brachytherapy</div><div class="cert-b">Internal radiation therapy software</div></div>
+          </div>
+          <div class="cert">
+            <div class="cert-ico"><i class="bi bi-person-badge-fill"></i></div>
+            <div><div class="cert-t">Team Leadership & Mentorship</div><div class="cert-b">Led module dev & mentored junior developers</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer><div class="container">
+    <div class="foot-n">Arun Kumar TN</div>
+    <div class="foot-soc">
+      <a href="mailto:arunn1919821@gmail.com" class="soc-b"><i class="bi bi-envelope-fill"></i></a>
+      <a href="#" class="soc-b"><i class="bi bi-github"></i></a>
+      <a href="#" class="soc-b"><i class="bi bi-linkedin"></i></a>
+    </div>
+    <div class="foot-copy">© 2025 Arun Kumar TN · All Rights Reserved</div>
+  </div></footer>
+</div>
+
+<!-- ═══════════════ PROJECTS ═══════════════ -->
+<div id="portfolio" class="page">
+  <div class="portfolio-wrap">
+    <div class="container">
+      <div class="mb-5">
+        <div class="sec-lbl">My Work</div>
+        <h2 class="sec-ttl">Projects</h2>
+        <p class="sec-sub">Medical software projects built with C#, WPF, and enterprise architecture — powering real healthcare outcomes.</p>
+        <div class="sec-line"><span></span><em></em></div>
+      </div>
+
+      <div class="filter-row">
+        <button class="fb active" onclick="filterProj('*',this)">All</button>
+        <button class="fb" onclick="filterProj('treatment',this)">Treatment</button>
+        <button class="fb" onclick="filterProj('simulation',this)">Simulation</button>
+        <button class="fb" onclick="filterProj('imaging',this)">Imaging</button>
+        <button class="fb" onclick="filterProj('therapy',this)">Therapy</button>
+      </div>
+
+      <div class="proj-grid" id="projGrid">
+        <div class="proj-card" data-cat="treatment"
+          data-title="Bhabhatron-TAW & MLC" data-cat-label="Treatment Software"
+          data-desc="Treatment software for telecobalt therapy units enabling complete patient setup and treatment delivery workflows. Developed complex UI using WPF and MVVM with real-time hardware integration via Socket communication."
+          data-client="Panacea Medical Technologies" data-year="2021" data-status="Production"
+          data-techs="C#,WPF,MVVM,Prism,WCF,Socket Communication,Entity Framework,LINQ,MS SQL Server"
+          onclick="openModalFromCard(this)">
+          <div class="proj-banner pb1">
+            <div class="proj-grid-bg"></div>
+            <div class="proj-ico">☢️</div>
+            <span class="proj-tag-badge">Treatment</span>
+          </div>
+          <div class="proj-hover">
+            <div class="ph-cat">Treatment Software</div>
+            <div class="ph-ttl">Bhabhatron</div>
+            <button class="ph-btn">View Details</button>
+          </div>
+          <div class="proj-body">
+            <div class="proj-ttl">Bhabhatron-TAW & Bhabhatron-MLC</div>
+            <div class="proj-st">Telecobalt Therapy Treatment Software</div>
+            <div class="proj-techs">
+              <span class="pt">C#</span><span class="pt">WPF</span><span class="pt">MVVM</span><span class="pt">Prism</span><span class="pt">WCF</span><span class="pt">MS SQL</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-card" data-cat="simulation"
+          data-title="Imagin" data-cat-label="Simulation Software"
+          data-desc="Simulation software for patient setup and simulation workflows, including patient registration and data management. Enables accurate pre-treatment simulation for improved treatment precision."
+          data-client="Panacea Medical Technologies" data-year="2022" data-status="Production"
+          data-techs="C#,WPF,MVVM,Prism,WCF Services,Entity Framework,LINQ,MS SQL Server"
+          onclick="openModalFromCard(this)">
+          <div class="proj-banner pb2">
+            <div class="proj-grid-bg"></div>
+            <div class="proj-ico">🧬</div>
+            <span class="proj-tag-badge">Simulation</span>
+          </div>
+          <div class="proj-hover">
+            <div class="ph-cat">Simulation Software</div>
+            <div class="ph-ttl">Imagin</div>
+            <button class="ph-btn">View Details</button>
+          </div>
+          <div class="proj-body">
+            <div class="proj-ttl">Imagin</div>
+            <div class="proj-st">Patient Setup & Simulation</div>
+            <div class="proj-techs">
+              <span class="pt">C#</span><span class="pt">WPF</span><span class="pt">MVVM</span><span class="pt">WCF</span><span class="pt">EF</span><span class="pt">MS SQL</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-card" data-cat="imaging"
+          data-title="Mammography v3" data-cat-label="Medical Imaging"
+          data-desc="Medical imaging application for breast screening with workflow enhancements and backend improvements. Uses Memory Mapping for high-performance image data transfer between processes with improved throughput."
+          data-client="Panacea Medical Technologies" data-year="2023" data-status="Production"
+          data-techs="C#,WPF,MVVM,Prism,WCF Services,Memory Mapping,Entity Framework,LINQ,MS SQL Server"
+          onclick="openModalFromCard(this)">
+          <div class="proj-banner pb3">
+            <div class="proj-grid-bg"></div>
+            <div class="proj-ico">🩻</div>
+            <span class="proj-tag-badge">Imaging</span>
+          </div>
+          <div class="proj-hover">
+            <div class="ph-cat">Medical Imaging</div>
+            <div class="ph-ttl">Mammography v3</div>
+            <button class="ph-btn">View Details</button>
+          </div>
+          <div class="proj-body">
+            <div class="proj-ttl">Mammography v3</div>
+            <div class="proj-st">Breast Screening Imaging App</div>
+            <div class="proj-techs">
+              <span class="pt">C#</span><span class="pt">WPF</span><span class="pt">Memory Map</span><span class="pt">EF</span><span class="pt">MS SQL</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-card" data-cat="therapy"
+          data-title="HDR – Brachytherapy" data-cat-label="Therapy Software"
+          data-desc="Internal radiation therapy software managing real-time communication between front-end UI and motion control hardware systems. Uses Memory Mapping for low-latency hardware control critical for patient safety."
+          data-client="Panacea Medical Technologies" data-year="2024" data-status="Production"
+          data-techs="C#,WPF,MVVM,Prism,WCF Services,Memory Mapping,Entity Framework,LINQ,MS SQL Server"
+          onclick="openModalFromCard(this)">
+          <div class="proj-banner pb4">
+            <div class="proj-grid-bg"></div>
+            <div class="proj-ico">⚡</div>
+            <span class="proj-tag-badge">Therapy</span>
+          </div>
+          <div class="proj-hover">
+            <div class="ph-cat">Therapy Software</div>
+            <div class="ph-ttl">HDR Brachytherapy</div>
+            <button class="ph-btn">View Details</button>
+          </div>
+          <div class="proj-body">
+            <div class="proj-ttl">HDR – Brachytherapy</div>
+            <div class="proj-st">Internal Radiation Therapy Software</div>
+            <div class="proj-techs">
+              <span class="pt">C#</span><span class="pt">WPF</span><span class="pt">Memory Map</span><span class="pt">WCF</span><span class="pt">MS SQL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-bg" id="modal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-top" id="mTop">📦</div>
+      <div class="modal-body-inner">
+        <div class="m-cat" id="mCat"></div>
+        <div class="m-ttl" id="mTtl"></div>
+        <div class="m-desc" id="mDesc"></div>
+        <div class="m-meta">
+          <div class="m-mi"><strong>Company</strong><span id="mClient"></span></div>
+          <div class="m-mi"><strong>Year</strong><span id="mYear"></span></div>
+          <div class="m-mi"><strong>Status</strong><span id="mStatus"></span></div>
+        </div>
+        <div class="m-techs-lbl">Technologies Used</div>
+        <div class="m-techs" id="mTechs"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer><div class="container">
+    <div class="foot-n">Arun Kumar TN</div>
+    <div class="foot-soc">
+      <a href="mailto:arunn1919821@gmail.com" class="soc-b"><i class="bi bi-envelope-fill"></i></a>
+      <a href="#" class="soc-b"><i class="bi bi-github"></i></a>
+      <a href="#" class="soc-b"><i class="bi bi-linkedin"></i></a>
+    </div>
+    <div class="foot-copy">© 2025 Arun Kumar TN · All Rights Reserved</div>
+  </div></footer>
+</div>
+
+<!-- ═══════════════ CONTACT ═══════════════ -->
+<div id="contact" class="page">
+  <div class="contact-wrap">
+    <div class="container">
+      <div class="mb-5">
+        <div class="sec-lbl">Say Hello</div>
+        <h2 class="sec-ttl">Get In Touch</h2>
+        <p class="sec-sub">Open for new opportunities, project collaborations, and interesting technical conversations.</p>
+        <div class="sec-line"><span></span><em></em></div>
+      </div>
+      <div class="row gy-4">
+        <div class="col-lg-5">
+          <div class="info-pnl">
+            <h3 class="ip-ttl">Let's Connect</h3>
+            <p class="ip-sub">Whether it's a job opportunity, project collaboration, or a technical discussion — I'm always happy to talk.</p>
+            <div class="cd">
+              <div class="cd-ico"><i class="bi bi-geo-alt-fill"></i></div>
+              <div><div class="cd-lbl">Location</div><div class="cd-val">Bangalore, Karnataka, India</div></div>
+            </div>
+            <div class="cd">
+              <div class="cd-ico"><i class="bi bi-telephone-fill"></i></div>
+              <div><div class="cd-lbl">Phone</div><div class="cd-val"><a href="tel:+917019719829">+91 7019719829</a></div></div>
+            </div>
+            <div class="cd">
+              <div class="cd-ico"><i class="bi bi-envelope-fill"></i></div>
+              <div><div class="cd-lbl">Email</div><div class="cd-val"><a href="mailto:arunn1919821@gmail.com">arunn1919821@gmail.com</a></div></div>
+            </div>
+            <div class="cd">
+              <div class="cd-ico"><i class="bi bi-building"></i></div>
+              <div><div class="cd-lbl">Current Company</div><div class="cd-val">Panacea Medical Technologies Pvt. Ltd.</div></div>
+            </div>
+            <div class="soc-r">
+              <a href="mailto:arunn1919821@gmail.com" class="soc-b"><i class="bi bi-envelope-fill"></i></a>
+              <a href="#" class="soc-b"><i class="bi bi-github"></i></a>
+              <a href="#" class="soc-b"><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="form-pnl">
+            <div id="formArea">
+              <h4 style="font-family:var(--fh);font-size:1.35rem;font-weight:800;color:var(--white);margin-bottom:.3rem;">Send a Message</h4>
+              <p style="font-size:.78rem;color:var(--muted2);margin-bottom:1.4rem;">Fill in the form and I'll get back to you as soon as possible.</p>
+              <div class="row g-0">
+                <div class="col-md-6 pe-md-2"><label class="fl">Your Name</label><input type="text" class="fc" id="cName" placeholder="John Doe"></div>
+                <div class="col-md-6 ps-md-2"><label class="fl">Your Email</label><input type="email" class="fc" id="cEmail" placeholder="hello@example.com"></div>
+                <div class="col-12"><label class="fl">Subject</label><input type="text" class="fc" id="cSubject" placeholder="Job opportunity / Collaboration / Query"></div>
+                <div class="col-12"><label class="fl">Message</label><textarea class="fc" id="cMessage" placeholder="Tell me about your project or opportunity..."></textarea></div>
+                <div class="col-12"><button class="btn-snd" onclick="submitForm()"><i class="bi bi-send-fill"></i> Send Message</button></div>
+              </div>
+            </div>
+            <div class="form-ok" id="formSuccess">
+              <i class="bi bi-check-circle-fill"></i>
+              <h5>Message Sent!</h5>
+              <p>Thanks for reaching out. I'll respond within 24 hours.</p>
+              <button class="btn-out mt-3" onclick="resetForm()">Send Another</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer><div class="container">
+    <div class="foot-n">Arun Kumar TN</div>
+    <div class="foot-soc">
+      <a href="mailto:arunn1919821@gmail.com" class="soc-b"><i class="bi bi-envelope-fill"></i></a>
+      <a href="#" class="soc-b"><i class="bi bi-github"></i></a>
+      <a href="#" class="soc-b"><i class="bi bi-linkedin"></i></a>
+    </div>
+    <div class="foot-copy">© 2025 Arun Kumar TN · All Rights Reserved</div>
+  </div></footer>
+</div>
+
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-arrow-up"></i></button>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // NAV SCROLL
+  window.addEventListener('scroll',()=>{
+    document.getElementById('navbar').classList.toggle('scrolled',scrollY>50);
+    document.getElementById('scrollTop').classList.toggle('show',scrollY>300);
+  });
+
+  // PAGE
+  function showPage(id,lnk){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById(id)?.classList.add('active');
+    window.scrollTo(0,0);
+    document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+    if(lnk)lnk.classList.add('active');
+    if(id==='about')triggerSkills();
+    const c=document.getElementById('navMenu');
+    if(c.classList.contains('show'))bootstrap.Collapse.getInstance(c)?.hide();
+    return false;
+  }
+
+  // SKILLS
+  function triggerSkills(){
+    setTimeout(()=>{
+      document.querySelectorAll('.skill-f').forEach(el=>{
+        const t=el.dataset.s||'0';
+        el.style.transform='scaleX(0)';
+        setTimeout(()=>{el.style.transform=`scaleX(${t})`;},60);
+      });
+    },80);
+  }
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){e.target.style.transform=`scaleX(${e.target.dataset.s||0})`;}
+    });
+  },{threshold:.2});
+  document.querySelectorAll('.skill-f').forEach(el=>{el.style.transform='scaleX(0)';obs.observe(el);});
+
+  // FILTER
+  function filterProj(cat,btn){
+    document.querySelectorAll('.fb').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.proj-card').forEach(c=>{
+      c.classList.toggle('hidden',!(cat==='*'||c.dataset.cat===cat));
+    });
+  }
+
+  const catIcons={treatment:'☢️',simulation:'🧬',imaging:'🩻',therapy:'⚡'};
+
+  // MODAL from data-attributes
+  function openModalFromCard(card){
+    document.getElementById('modal').classList.add('open');
+    document.getElementById('mTop').textContent=catIcons[card.dataset.cat]||'📦';
+    document.getElementById('mTtl').textContent=card.dataset.title;
+    document.getElementById('mCat').textContent=(card.dataset.catLabel||'').toUpperCase();
+    document.getElementById('mDesc').textContent=card.dataset.desc;
+    document.getElementById('mClient').textContent=card.dataset.client;
+    document.getElementById('mYear').textContent=card.dataset.year;
+    document.getElementById('mStatus').textContent=card.dataset.status;
+    document.getElementById('mTechs').innerHTML=(card.dataset.techs||'').split(',').map(t=>`<span class="pt">${t.trim()}</span>`).join('');
+  }
+  function closeModal(){document.getElementById('modal').classList.remove('open');}
+  document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal'))closeModal();});
+
+  // CONTACT
+  function submitForm(){
+    if(!document.getElementById('cName').value.trim()||!document.getElementById('cEmail').value.trim()){alert('Please fill in your name and email.');return;}
+    document.getElementById('formArea').style.display='none';
+    document.getElementById('formSuccess').style.display='block';
+  }
+  function resetForm(){
+    ['cName','cEmail','cSubject','cMessage'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('formArea').style.display='block';
+    document.getElementById('formSuccess').style.display='none';
+  }
+</script>
+</body>
+</html>
